@@ -1,0 +1,178 @@
+{
+    "CG": [
+        {
+            "filename": "BADETUMNAR_450157_BANGAPAL_450155_CHHOTETUMAR_450149_MOFALNAR_450150_ORTHO.tif",
+            "channels": 4,
+            "dtypes": [
+                "uint8",
+                "uint8",
+                "uint8",
+                "uint8"
+            ],
+            "crs": "EPSG:32644",
+            "width": 213734,
+            "height": 112836,
+            "transform": [
+                0.03500000000000001,
+                0.0,
+                522898.79874148004,
+                0.0,
+                -0.03499999999999802,
+                2105322.2808483047,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "filename": "NAGUL_450171_MADASE_450172_GHOTPAL_450137_ORTHO.tif",
+            "channels": 4,
+            "dtypes": [
+                "uint8",
+                "uint8",
+                "uint8",
+                "uint8"
+            ],
+            "crs": "EPSG:32644",
+            "width": 234417,
+            "height": 106412,
+            "transform": [
+                0.03499999999999988,
+                0.0,
+                540789.1569404171,
+                0.0,
+                -0.0349999999999993,
+                2103701.248415882,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "filename": "SAMLUR_450163_SIYANAR_450164_KUTULNAR_450165_BINJAM_450166_JHODIYAWADAM_450167_ORTHO.tif",
+            "error": "SAMLUR_450163_SIYANAR_450164_KUTULNAR_450165_BINJAM_450166_JHODIYAWADAM_450167_ORTHO.tif: TIFFReadDirectory:Failed to read directory at offset 2415400552"
+        }
+    ],
+    "PB": [
+        {
+            "filename": "28996_NADALA_ORTHO.tif",
+            "channels": 4,
+            "dtypes": [
+                "uint8",
+                "uint8",
+                "uint8",
+                "uint8"
+            ],
+            "crs": "EPSG:32643",
+            "width": 26259,
+            "height": 27390,
+            "transform": [
+                0.030400000000000003,
+                0.0,
+                540378.3252300001,
+                0.0,
+                -0.030400000000000003,
+                3490790.66421,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "filename": "bagga_ortho_37774.tif",
+            "channels": 4,
+            "dtypes": [
+                "uint8",
+                "uint8",
+                "uint8",
+                "uint8"
+            ],
+            "crs": "EPSG:3857",
+            "width": 22846,
+            "height": 26747,
+            "transform": [
+                0.03554530771250111,
+                0.0,
+                8366153.425,
+                0.0,
+                -0.03554530601562558,
+                3727417.0989,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "filename": "fattu_bhila_ortho_3857.tif",
+            "channels": 4,
+            "dtypes": [
+                "uint8",
+                "uint8",
+                "uint8",
+                "uint8"
+            ],
+            "crs": "EPSG:3857",
+            "width": 20572,
+            "height": 22451,
+            "transform": [
+                0.03554530429709779,
+                0.0,
+                8360202.7088,
+                0.0,
+                -0.03554530310454531,
+                3727628.7694,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "filename": "PINDORI MAYA SINGH-TUGALWAL_28456_ortho.tif",
+            "channels": 4,
+            "dtypes": [
+                "uint8",
+                "uint8",
+                "uint8",
+                "uint8"
+            ],
+            "crs": "EPSG:32643",
+            "width": 72041,
+            "height": 80112,
+            "transform": [
+                0.03152389999999937,
+                0.0,
+                539911.4874127127,
+                0.0,
+                -0.031523899999997974,
+                3520767.408475321,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        {
+            "filename": "TIMMOWAL_37695_ORI.tif",
+            "channels": 4,
+            "dtypes": [
+                "uint8",
+                "uint8",
+                "uint8",
+                "uint8"
+            ],
+            "crs": "EPSG:32643",
+            "width": 31100,
+            "height": 30532,
+            "transform": [
+                0.03193309999999951,
+                0.0,
+                508420.6625493903,
+                0.0,
+                -0.03193310000000005,
+                3489080.734989904,
+                0.0,
+                0.0,
+                1.0
+            ]
+        }
+    ]
+}
