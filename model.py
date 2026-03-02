@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import segmentation_models_pytorch as smp
 
 class DoubleConv(nn.Module):
     """(convolution => [BN] => ReLU) * 2"""
@@ -67,9 +68,24 @@ class MiniUNet(nn.Module):
         logits = self.outc(x)
         return logits
 
+def get_sota_model(n_channels=3, n_classes=4):
+    """
+    Returns a DeepLabV3+ model with a ResNet50 ImageNet-pretrained backbone.
+    This is a SOTA model for semantic segmentation on high-resolution images.
+    """
+    model = smp.DeepLabV3Plus(
+        encoder_name="resnet50",        # ImageNet-pretrained backbone
+        encoder_weights="imagenet",      # Pre-trained weights
+        in_channels=n_channels,         # RGB = 3
+        classes=n_classes,              # BG, Road, Built, Water
+    )
+    return model
+
+
 if __name__ == "__main__":
-    model = MiniUNet(n_channels=3, n_classes=4)
+    model = get_sota_model(n_channels=3, n_classes=4)
     x = torch.randn(1, 3, 512, 512)
     y = model(x)
-    print(f"Input shape: {x.shape}")
+    print(f"Input shape:  {x.shape}")
     print(f"Output shape: {y.shape}")
+    print(f"Model params: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}M")

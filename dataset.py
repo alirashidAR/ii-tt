@@ -10,20 +10,21 @@ from rasterio.windows import Window
 from shapely.geometry import box
 from tqdm import tqdm
 
-# ================= CONFIG =================
-
 TILE_SIZE = 512
-STRIDE = 512
+STRIDE = 384
 MIN_FOREGROUND_RATIO = 0.01
-
 CLASS_BG = 0
 CLASS_ROAD = 1
 CLASS_BUILT = 2
 CLASS_WATER = 3
+CLASS_BRIDGE = 4
+CLASS_RAILWAY = 5
 
 ROAD_KEYS = ["road"]
 BUILT_KEYS = ["built"]
 WATER_KEYS = ["water"]
+BRIDGE_KEYS = ["bridge"]
+RAILWAY_KEYS = ["railway"]
 
 # ============ DATASET MAPPINGS ============
 
@@ -31,13 +32,13 @@ DATASETS = [
     {
         "tif_dir": Path(r"E:\CG\tifs"),
         "shp_dir": r"E:\CG\shp-file",
-        "out_dir": r"E:\dataset\train",
+        "out_dir": r"E:\dataset_6_classes\train",
         "prefix": "CG"
     },
     {
         "tif_dir": Path(r"E:\PB_training_dataSet_shp_file\PB_training_dataSet_shp_file\tifs"),
         "shp_dir": r"E:\PB_training_dataSet_shp_file\PB_training_dataSet_shp_file\shp-file",
-        "out_dir": r"E:\dataset\train",
+        "out_dir": r"E:\dataset_6_classes\train",
         "prefix": "PB"
     }
 ]
@@ -47,7 +48,7 @@ DATASETS = [
 
 def find_shapefiles(shp_dir):
     shp_dir = Path(shp_dir)
-    shp_map = {"road": [], "built": [], "water": []}
+    shp_map = {"road": [], "built": [], "water": [], "bridge": [], "railway": []}
 
     for shp in shp_dir.glob("*.shp"):
         name = shp.name.lower()
@@ -57,6 +58,10 @@ def find_shapefiles(shp_dir):
             shp_map["built"].append(shp)
         elif any(k in name for k in WATER_KEYS):
             shp_map["water"].append(shp)
+        elif any(k in name for k in BRIDGE_KEYS):
+            shp_map["bridge"].append(shp)
+        elif any(k in name for k in RAILWAY_KEYS):
+            shp_map["railway"].append(shp)
 
     return shp_map
 
@@ -91,7 +96,9 @@ def get_geometries(tif_path, shp_map):
     geoms_map = {
         "road": load_and_clip(shp_map["road"], crs, bounds),
         "built": load_and_clip(shp_map["built"], crs, bounds),
-        "water": load_and_clip(shp_map["water"], crs, bounds)
+        "water": load_and_clip(shp_map["water"], crs, bounds),
+        "bridge": load_and_clip(shp_map["bridge"], crs, bounds),
+        "railway": load_and_clip(shp_map["railway"], crs, bounds)
     }
     return geoms_map
 
@@ -109,6 +116,8 @@ def tile_and_save(tif_path, geoms_map, out_dir, prefix):
         road = geoms_map["road"]
         built = geoms_map["built"]
         water = geoms_map["water"]
+        bridge = geoms_map["bridge"]
+        railway = geoms_map["railway"]
 
         tid = 0
         for y in tqdm(range(0, H - TILE_SIZE + 1, STRIDE)):
@@ -139,6 +148,28 @@ def tile_and_save(tif_path, geoms_map, out_dir, prefix):
                     if not hit.empty:
                         rasterize(
                             [(g, CLASS_BUILT) for g in hit.geometry],
+                            out_shape=(TILE_SIZE, TILE_SIZE),
+                            transform=win_transform,
+                            out=mask_t
+                        )
+
+                # Bridge
+                if not bridge.empty:
+                    hit = bridge[bridge.intersects(win_box)]
+                    if not hit.empty:
+                        rasterize(
+                            [(g, CLASS_BRIDGE) for g in hit.geometry],
+                            out_shape=(TILE_SIZE, TILE_SIZE),
+                            transform=win_transform,
+                            out=mask_t
+                        )
+
+                # Railway
+                if not railway.empty:
+                    hit = railway[railway.intersects(win_box)]
+                    if not hit.empty:
+                        rasterize(
+                            [(g, CLASS_RAILWAY) for g in hit.geometry],
                             out_shape=(TILE_SIZE, TILE_SIZE),
                             transform=win_transform,
                             out=mask_t
